@@ -1,0 +1,1503 @@
+import java.awt.*;
+import javax.swing.*;
+import java.awt.event.*;
+public class MainMethod { 
+	
+	JFrame frame = new JFrame("The Dark Labyrinth");
+	
+	Container con;
+	
+	
+	
+	JPanel titlePanel = new JPanel();
+	JPanel startButtonPanel = new JPanel();
+	JPanel MainTextPanel = new JPanel();
+	JPanel choiceButtonPanel = new JPanel();
+	JPanel PlayerPanel = new JPanel();
+	JPanel InventoryPanel = new JPanel();
+	JPanel weaponsPanel = new JPanel();
+	JPanel weaponsMenuOpenPanel = new JPanel();
+	
+	JLabel titleLabel = new JLabel("The Dark Labyrinth");
+	JLabel hpLabel = new JLabel("HP: ");
+	JLabel hpLabelNumber = new JLabel();
+	JLabel weaponLabel = new JLabel("Weapon: ");
+	JLabel weaponLabelName = new JLabel();
+	JLabel goldCoinsLabel = new JLabel("Gold Coins:");
+	JLabel goldCoinsLabelName = new JLabel();
+	
+	JButton Continue = new JButton("Continue");
+	JButton Choice1 = new JButton("Choice 1");
+	JButton Choice2 = new JButton("Choice 2");
+	JButton Choice3 = new JButton("Choice 3");
+	JButton Choice4 = new JButton("Choice 4");
+	JButton Choice5 = new JButton("Choice 5");
+	JButton Inventory = new JButton("Inventory");
+	JButton invb1 = new JButton();
+	JButton invb2 = new JButton();
+	JButton invb3 = new JButton();
+	JButton invb4 = new JButton();
+	JButton invb5 = new JButton();
+	JButton invb6 = new JButton();
+	JButton wb1 = new JButton();
+	JButton wb2 = new JButton();
+	JButton WeaponsMenuOpen = new JButton("O");
+	
+	JTextArea mainTextArea = new JTextArea("Welcome, are you ready to begin your Journey?");
+	
+	int playerHP;	
+	int enemyHP;
+	int goldCoinsNumber;
+	int secretBarrelKeyValue;
+	int SecretRoomValue;
+	int enemyNumber;
+	
+	String position;
+	String inventoryStatus;
+	String weaponsMenuStatus;
+	String weapon;
+	String Enemy;
+	String Victory;
+	
+	TitleScreenHandler tsHandler = new TitleScreenHandler();
+	ChoiceHandler choiceHandler = new ChoiceHandler();
+	InventoryHandler iHandler = new InventoryHandler();
+	weaponsHandler wHandler = new weaponsHandler();
+	
+	SuperItem[] playerItem = new SuperItem[6];
+	
+	ItemEmpty empty = new ItemEmpty();
+	
+	Key_CastleKey cKey = new Key_CastleKey();
+	
+	Key_CastleArmoryKey ArmoryKey = new Key_CastleArmoryKey();
+	
+	Weapon_LongSword LSword = new Weapon_LongSword();
+	Weapon_Fork Fork = new Weapon_Fork();
+	
+	Aparrel_GuardBoots GBoots = new Aparrel_GuardBoots();
+	Aparrel_GuardTrousers GTrousers = new Aparrel_GuardTrousers();
+	Aparrel_GuardShirt GShirt = new Aparrel_GuardShirt();
+	
+	Food_Mutton mutton = new Food_Mutton();
+	
+	public static void main(String[]args){
+		
+		new MainMethod();		
+	}
+	public MainMethod() {
+		frame.setBounds(-7,0,1377,776);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setBackground(Color.BLACK);
+		frame.setLayout(null);
+		frame.setVisible(true);
+		con = frame.getContentPane();
+		
+		titlePanel.setBounds(400,100,265,42);
+		titlePanel.setBackground(Color.BLACK);
+		titlePanel.setForeground(Color.WHITE);
+		con.add(titlePanel);
+		
+		titleLabel.setBounds(535,100,265,42);
+		titleLabel.setBackground(Color.BLACK);
+		titleLabel.setForeground(Color.WHITE);
+		titleLabel.setFont(new Font("Times New Roman",Font.PLAIN,34));
+		titleLabel.setVisible(true);
+		titlePanel.add(titleLabel);
+		
+		startButtonPanel.setBounds(480,500,90,35);
+		startButtonPanel.setBackground(Color.BLACK);
+		con.add(startButtonPanel);
+		
+		Continue.setBounds(480,500,90,20);
+		Continue.setBackground(Color.BLACK);
+		Continue.setForeground(Color.WHITE);
+		Continue.addActionListener(tsHandler);
+		Continue.setFocusPainted(false);
+		startButtonPanel.add(Continue);	
+	}
+	public void gamePlayScreen() {
+	
+		titlePanel.setVisible(false);
+		startButtonPanel.setVisible(false);
+		
+		SwingUtilities.updateComponentTreeUI(frame);
+		
+		MainTextPanel.setBounds(308,200,500,200);
+		MainTextPanel.setBackground(Color.BLACK);
+		
+		con.add(MainTextPanel);
+		
+		mainTextArea.setBounds(308,200,500,200);
+		mainTextArea.setBackground(Color.BLACK);
+		mainTextArea.setForeground(Color.WHITE);
+		mainTextArea.setFont(new Font("Times New Roman",Font.PLAIN,24));
+		mainTextArea.setLineWrap(true);
+		MainTextPanel.add(mainTextArea);
+		
+		PlayerPanel.setBounds(185,15,800,50);
+		PlayerPanel.setBackground(Color.BLACK);
+		PlayerPanel.setLayout(new GridLayout(1,6));
+		PlayerPanel.setVisible(true);
+		con.add(PlayerPanel);
+		
+		choiceButtonPanel.setBounds(300,400,500,200);
+		choiceButtonPanel.setBackground(Color.BLACK);
+		choiceButtonPanel.setLayout(new GridLayout(6,1));
+		con.add(choiceButtonPanel);
+		
+		Choice1.setBackground(Color.BLACK);
+		Choice1.setForeground(Color.WHITE);
+		Choice1.setFont(new Font("Times New Roman",Font.PLAIN,24));
+		Choice1.setFocusPainted(false);
+		Choice1.addActionListener(choiceHandler);
+		Choice1.setActionCommand("Choice1");
+		choiceButtonPanel.add(Choice1);
+		
+		Choice2.setBackground(Color.BLACK);
+		Choice2.setForeground(Color.WHITE);
+		Choice2.setFont(new Font("Times New Roman",Font.PLAIN,24));
+		Choice2.setFocusPainted(false);
+		Choice2.addActionListener(choiceHandler);
+		Choice2.setActionCommand("Choice2");
+		choiceButtonPanel.add(Choice2);
+		
+		Choice3.setBackground(Color.BLACK);
+		Choice3.setForeground(Color.WHITE);
+		Choice3.setFont(new Font("Times New Roman",Font.PLAIN,24));
+		Choice3.setFocusPainted(false);
+		Choice3.addActionListener(choiceHandler);
+		Choice3.setActionCommand("Choice3");
+		choiceButtonPanel.add(Choice3);
+		
+		Choice4.setBackground(Color.BLACK);
+		Choice4.setForeground(Color.WHITE);
+		Choice4.setFont(new Font("Times New Roman",Font.PLAIN,24));
+		Choice4.setFocusPainted(false);
+		Choice4.addActionListener(choiceHandler);
+		Choice4.setActionCommand("Choice4");
+		choiceButtonPanel.add(Choice4);
+		
+		Choice5.setBackground(Color.BLACK);
+		Choice5.setForeground(Color.WHITE);
+		Choice5.setFont(new Font("Times New Roman",Font.PLAIN,24));
+		Choice5.setFocusPainted(false);
+		Choice5.addActionListener(choiceHandler);
+		Choice5.setActionCommand("Choice5");
+		choiceButtonPanel.add(Choice5);
+		
+		Inventory.setBackground(Color.BLACK);
+		Inventory.setForeground(Color.WHITE);
+		Inventory.setFont(new Font("Times New Roman",Font.PLAIN,24));
+		Inventory.setFocusPainted(false);
+		Inventory.addActionListener(iHandler);
+		Inventory.setActionCommand("Inventorybtn");
+		choiceButtonPanel.add(Inventory);
+		
+		InventoryPanel.setBounds(805,400,200,200);
+		InventoryPanel.setBackground(Color.BLACK);
+		InventoryPanel.setLayout(new GridLayout(6,1));
+		InventoryPanel.setVisible(false);
+		con.add(InventoryPanel);
+		
+		weaponsPanel.setBounds(130,467,165,67);
+		weaponsPanel.setLayout(new GridLayout(2,1));
+		weaponsPanel.setBackground(Color.BLACK);
+		weaponsPanel.setVisible(false);
+		con.add(weaponsPanel);
+		
+		weaponsMenuOpenPanel.setBounds(240,534,55,30);
+		weaponsMenuOpenPanel.setLayout(new GridLayout(1,1));
+		weaponsMenuOpenPanel.setBackground(Color.BLACK);
+		con.add(weaponsMenuOpenPanel);
+		
+		WeaponsMenuOpen.setBackground(Color.BLACK);
+		WeaponsMenuOpen.setForeground(Color.WHITE);
+		WeaponsMenuOpen.setFont(new Font("Times New Roman",Font.PLAIN,24));
+		WeaponsMenuOpen.setFocusPainted(false);
+		WeaponsMenuOpen.addActionListener(wHandler);
+		WeaponsMenuOpen.setActionCommand("WeaponsMenuOpen");
+		weaponsMenuOpenPanel.add(WeaponsMenuOpen);
+		
+		invb1.setBackground(Color.BLACK);
+		invb1.setForeground(Color.WHITE);
+		invb1.setFont(new Font("Times New Roman",Font.PLAIN,24));
+		invb1.setFocusPainted(false);
+		invb1.addActionListener(iHandler);
+		invb1.setActionCommand("invb1");
+		InventoryPanel.add(invb1);
+		
+		invb2.setBackground(Color.BLACK);
+		invb2.setForeground(Color.WHITE);
+		invb2.setFont(new Font("Times New Roman",Font.PLAIN,24));
+		invb2.setFocusPainted(false);
+		invb2.addActionListener(iHandler);
+		invb2.setActionCommand("invb2");
+		InventoryPanel.add(invb2);
+		
+		invb3.setBackground(Color.BLACK);
+		invb3.setForeground(Color.WHITE);
+		invb3.setFont(new Font("Times New Roman",Font.PLAIN,24));
+		invb3.setFocusPainted(false);
+		invb3.addActionListener(iHandler);
+		invb3.setActionCommand("invb3");
+		InventoryPanel.add(invb3);
+		
+		invb4.setBackground(Color.BLACK);
+		invb4.setForeground(Color.WHITE);
+		invb4.setFont(new Font("Times New Roman",Font.PLAIN,24));
+		invb4.setFocusPainted(false);
+		invb4.addActionListener(iHandler);
+		invb4.setActionCommand("invb4");
+		InventoryPanel.add(invb4);
+		
+		invb5.setBackground(Color.BLACK);
+		invb5.setForeground(Color.WHITE);
+		invb5.setFont(new Font("Times New Roman",Font.PLAIN,24));
+		invb5.setFocusPainted(false);
+		invb5.addActionListener(iHandler);
+		invb5.setActionCommand("invb5");
+		InventoryPanel.add(invb5);
+		
+		invb6.setBackground(Color.BLACK);
+		invb6.setForeground(Color.WHITE);
+		invb6.setFont(new Font("Times New Roman",Font.PLAIN,24));
+		invb6.setFocusPainted(false);
+		invb6.addActionListener(iHandler);
+		invb6.setActionCommand("invb6");
+		InventoryPanel.add(invb6);
+		
+		wb1.setFont(new Font("Times New Roman",Font.PLAIN,24));
+		wb1.setBackground(Color.WHITE);
+		wb1.setBackground(Color.BLACK);
+		wb1.setFocusPainted(false);
+		wb1.addActionListener(wHandler);
+		wb1.setActionCommand("wb1");
+		weaponsPanel.add(wb1);
+		
+		wb2.setFont(new Font("Times New Roman",Font.PLAIN,24));
+		wb2.setBackground(Color.WHITE);
+		wb2.setBackground(Color.BLACK);
+		wb2.setFocusPainted(false);
+		wb2.addActionListener(wHandler);
+		wb2.setActionCommand("wb2");
+		weaponsPanel.add(wb2);
+		
+		
+		
+		hpLabel.setFont(new Font("Times New Roman",Font.PLAIN,24));
+		hpLabel.setForeground(Color.WHITE);
+		PlayerPanel.add(hpLabel);
+		
+		hpLabelNumber.setFont(new Font("Times New Roman",Font.PLAIN,24));
+		hpLabelNumber.setForeground(Color.WHITE);
+		PlayerPanel.add(hpLabelNumber);
+		
+		weaponLabel.setFont(new Font("Times New Roman",Font.PLAIN,24));
+		weaponLabel.setForeground(Color.WHITE);
+		PlayerPanel.add(weaponLabel);
+		
+		weaponLabelName.setFont(new Font("Times New Roman",Font.PLAIN,24));
+		weaponLabelName.setForeground(Color.WHITE);
+		PlayerPanel.add(weaponLabelName);
+		
+		goldCoinsLabel.setFont(new Font("Times New Roman",Font.PLAIN,24));
+		goldCoinsLabel.setForeground(Color.WHITE);
+		PlayerPanel.add(goldCoinsLabel);
+		
+		goldCoinsLabelName.setFont(new Font("Times New Roman",Font.PLAIN,24));
+		goldCoinsLabelName.setForeground(Color.WHITE);
+		PlayerPanel.add(goldCoinsLabelName);
+		
+		playerSetup();
+	}
+	public void playerSetup() {
+		playerHP = 100;
+		enemyHP = 12;
+		Victory = "lose";
+		weapon = "empty";
+		weaponLabelName.setText(weapon);
+		hpLabelNumber.setText("" + playerHP);
+		goldCoinsNumber = 0;
+		goldCoinsLabelName.setText("" + goldCoinsNumber);
+		inventoryStatus = "close";
+		weaponsMenuStatus = "close";
+		SecretRoomValue = 1;
+		secretBarrelKeyValue = 1;
+		
+		playerItem[0] = empty;
+		playerItem[1] = empty;
+		playerItem[2] = empty;
+		playerItem[3] = empty;
+		playerItem[4] = empty;
+		playerItem[5] = empty;
+
+		GuardQuarters1();
+	}
+	public void GuardQuarters1() {
+		position = "GuardQuarters1";
+		mainTextArea.setText("You are awoken late in the night, your superior is \nhovering over you shaking you, trying to wake you up. C'mon, we need to go, NOW. Travelers have \nheard strange sounds coming from far east over the mountains. KaJima's Labyrinth has come alive! ");
+		Choice1.setText("");
+		Choice2.setText("");
+		Choice3.setText("");
+		Choice4.setText("");
+		Choice5.setText("Next");
+	}
+	public void GuardQuarters2() {
+		position = "GuardQuarters2";
+		mainTextArea.setText("We need to investigate and find out what has \nhappened and stop whatever is in there from getting out and slaying us all.");
+		
+		Choice1.setText("");
+		Choice2.setText("");
+		Choice3.setText("");
+		Choice4.setText("");
+		Choice5.setText("Next");
+	}
+	public void GuardQuarters3() {
+		position = "GuardQuarters3";
+		mainTextArea.setText("Grab your Sword and group up at the main gate \nas soon as you are ready.Here is some coin, get some supplies before heading out.");
+		goldCoinsNumber = goldCoinsNumber + 25;
+		goldCoinsLabelName.setText("" + goldCoinsNumber);
+		Choice1.setText("");
+		Choice2.setText("");
+		Choice3.setText("");
+		Choice4.setText("");
+		Choice5.setText("Next");
+	}
+	public void GuardQuarters4() {
+		position = "GuardQuarters4";
+		mainTextArea.setText("'You get up, stretch your limbs, and\n begin getting ready for your Journey.'");
+		
+		Choice1.setText("");
+		Choice2.setText("");
+		Choice3.setText("");
+		Choice4.setText("");
+		Choice5.setText("Next");
+	}
+	public void GuardQuarters5() {
+		position = "GuardQuarters5";
+		mainTextArea.setText("'You look over to your right and on the table is your long sword.'");
+		
+		Choice1.setText("Take Long Sword");
+		Choice2.setText("");
+		Choice3.setText("");
+		Choice4.setText("");
+		Choice5.setText("");
+	}
+	public void GuardQuarters6() {
+		position = "GuardQuarters6";
+		weapon = "Long Sword";
+		weaponLabelName.setText(weapon);
+		mainTextArea.setText("'You have picked up your sword.'");
+		
+		Choice1.setText("");
+		Choice2.setText("");
+		Choice3.setText("");
+		Choice4.setText("");
+		Choice5.setText("Next");
+	}
+	public void GuardQuarters7() {
+		position = "GuardQuarters7";
+		mainTextArea.setText("This is the Guard Quarters, your bed is in front of you, there is an empty tablew to your left, behind you is the door to the main hall.");
+		
+		Choice1.setText("Main Hall");
+		Choice2.setText("");
+		Choice3.setText("");
+		Choice4.setText("");
+		Choice5.setText("");
+	}
+	public void InitLeaveGuardQuarters() {
+		position = "initLeaveGuardQuarters";
+		mainTextArea.setText("In front of you is a door leading to the main hall.");
+		
+		Choice1.setText("Enter Main Hall");
+		Choice2.setText("");
+		Choice3.setText("");
+		Choice4.setText("");
+		Choice5.setText("");
+	}
+	public void MainHall() {
+		position = "MainHall";
+		mainTextArea.setText("'You are in the Main Hall, going left takes you to \nthe Dining Hall. Proceeding right will lead you to \nthe cellar and dungeon. Straight across from you \nis the armory.'");
+		
+		Choice1.setText("Armory");
+		Choice2.setText("Dining Hall");
+		Choice3.setText("Dungeon");
+		Choice4.setText("Guard Quarters");
+		Choice5.setText("Ale Cellar");
+	}
+	public void Armory() {
+		position = "Armory";	
+		mainTextArea.setText("Behind cages you see swords of all types, maces, \ncrossbows and many other weapons along with \narmor of all different types.");
+	
+		Choice1.setText("Open Sword Cage");
+		Choice2.setText("Open Apparel Cage");
+		Choice3.setText("Open Crossbow Cage");
+		Choice4.setText("");
+		Choice5.setText("Main Hall");
+	}
+	public void DiningHall() {
+		position = "DiningHall";
+		mainTextArea.setText("You are in the dining hall. There is apples and peaches on the table fresh from the garden. To the left is the kings hall, to the right is the Great hall.");
+		
+		Choice1.setText("King's Hall");
+		Choice2.setText("Kitchen");
+		Choice3.setText("Main Hall");
+		Choice4.setText("Great Hall");
+		Choice5.setText("Take apple");
+	}
+	public void takeApple() {
+		position = "takeApple";
+		
+		mainTextArea.setText("You have taken an apple");
+		
+		Choice1.setText(">");
+		Choice2.setText("");
+		Choice3.setText("");
+		Choice4.setText("");
+		Choice5.setText("");
+	}
+	
+	//Matches on the grill for lighting the secret room torch
+	
+	public void Kitchen() {
+		position = "Kitchen";
+		mainTextArea.setText("This is the kitchen, the door is locked. Only the waiters and chefs are aloud in here.");
+		
+		Choice1.setText("Dining Hall");
+		Choice2.setText("");
+		Choice3.setText("");
+		Choice4.setText("");
+		Choice5.setText("");
+	}
+	public void KingsHall() {
+		position = "KingsHall";
+		mainTextArea.setText("The kings hall is locked, none shall enter except the King.");
+		
+		Choice1.setText("Dining Hall");
+		Choice2.setText("");
+		Choice3.setText("");
+		Choice4.setText("");
+		Choice5.setText("");	
+	}
+	public void KingsRoom() {
+		position = "KingsRoom";
+		mainTextArea.setText("The kings room.");
+		
+		Choice1.setText("");
+		Choice2.setText("");
+		Choice3.setText("");
+		Choice4.setText("");
+		Choice5.setText("");	
+	}
+	public void KingsThronePassage() {
+		position = "KingsThronePassage";
+		mainTextArea.setText("This low lit rat infested passage leads to the kings room.");
+		
+		Choice1.setText("Enter passage to kings room.");
+		Choice2.setText("");
+		Choice3.setText("");
+		Choice4.setText("");
+		Choice5.setText("");	
+	}
+	public void KingsThronePassage1() {
+		position = "KingsThronePassage1";
+		Enemy = "Rat";
+		mainTextArea.setText("Soon after you enter, you are attacked by a " + Enemy + ".");
+		
+		Choice1.setText("Flee to the Great Hall");
+		Choice2.setText("Fight Back");
+		Choice3.setText("");
+		Choice4.setText("");
+		Choice5.setText("");	
+	}
+	public void KingsThronePassage2() {
+		position = "KingsThronePassage2";
+		mainTextArea.setText("As you continue through the passage, it is completly quiet. In no time you reach the kings Room.");
+		
+		Choice1.setText("Enter the King's room.");
+		Choice2.setText("King's Throne.");
+		Choice3.setText("");
+		Choice4.setText("");
+		Choice5.setText("");
+	}
+	public void GreatHall() {
+		position = "GreatHall";
+		mainTextArea.setText("You are standing in the Great Hall, this is where the king's throne is. There is many ancient weapons,antiques and other things locked up in glass cases.");
+		
+		Choice1.setText("King's Throne");
+		Choice2.setText("Main entrance");
+		Choice3.setText("Display cases");
+		Choice4.setText("");
+		Choice5.setText("Dining Hall");
+	}
+	public void KingsThrone() {
+		position = "KingsThrone";
+		mainTextArea.setText("At the kings throne. behind it you find a lever that opens a path.");
+		
+		Choice1.setText("Pull lever");
+		Choice2.setText("Great Hall");
+		Choice3.setText("Sit Throne");
+		Choice4.setText("");
+		Choice5.setText("");	
+	}
+	public void KingsThrone2() {
+		position = "KingsThrone2";
+		mainTextArea.setText("You pull the lever when nobody is looking and the chair moves forward revealing a passage.");
+		
+		Choice1.setText("");
+		Choice2.setText("");
+		Choice3.setText("");
+		Choice4.setText("");
+		Choice5.setText("Next");	
+	}
+	public void MainEntrance() {
+		position = "MainEntrance";
+		mainTextArea.setText("These enormus doors lead open to a path through the garden and into the village.\n<Do you want to leave the castle?>");
+		
+		Choice1.setText("Exit castle");
+		Choice2.setText("");
+		Choice3.setText("");
+		Choice4.setText("");
+		Choice5.setText("");
+	}
+	public void CastleGarden() {
+		position = "CastleGarden";
+		mainTextArea.setText("It is mid spring and the flowers and crops are exploding quickly.");
+		
+		Choice1.setText("Follow the path into the village");
+		Choice2.setText("");
+		Choice3.setText("");
+		Choice4.setText("");
+		Choice5.setText("");
+	}
+	public void Village() {
+		position = "Village";
+		mainTextArea.setText("As you near the village you see the busy streets full of life. there are several marketplaces in the area.");
+	
+		Choice1.setText("Continue Through the village to the Gate");
+		Choice2.setText("Look at the village bulleten for availible quests");
+		Choice3.setText("View markets in the area.");
+		Choice4.setText("Castle Garden");
+		Choice5.setText("");
+	}
+	public void Markets() {
+		position = "Markets";
+		mainTextArea.setText("The local markets include 'Fohndir's Swords', 'Alyoshia's Apparel and Armor', and Dahvarin's Grocery.");
+		Choice1.setText("Fohndir's Swords");
+		Choice2.setText("Alyosha's Apparel and Armor");
+		Choice3.setText("Dahrvin's Grocery");
+		Choice4.setText("");
+		Choice5.setText("Go back");
+	}
+	
+	public void FohndirsSwords() {
+		position = "FondihrsSwords";
+		mainTextArea.setText("Welcome to Fohndir's Swords, i have the greatest selection in town!");
+		Choice1.setText("Browse weapons");
+		Choice2.setText("Sell weapons");
+		Choice3.setText("Trade");
+		Choice4.setText("");
+		Choice5.setText("Exit");
+	}
+	public void AlyoshasApparelandArmor() {
+		mainTextArea.setText("Alyosha's Apparel and armor. What ever you might need, I might have.");
+	}
+	public void QuestBulletenBoard() {
+		position = "QuestsBulletenBoard";
+	}
+	public void MainGate() {
+		position = "MainGate";
+		mainTextArea.setText("<You approach the main gate.>\n'Its about time you get here, C'mon, we haven't the time to waste. ");
+		
+		Choice1.setText("Next");
+		Choice2.setText("");
+		Choice3.setText("");
+		Choice4.setText("");
+		Choice5.setText("Village");
+	}
+	public void MainGate2() {
+		position = "MainGate2";
+		mainTextArea.setText("Are you ready to leave, once you begin your journey "
+				+ "you cannot return until the quest is complete?");
+		
+		Choice1.setText("Yes");
+		Choice2.setText("No");
+		Choice3.setText("");
+		Choice4.setText("");
+		Choice5.setText("");
+	}
+	public void YesMainGate() {
+		position = "YesMainGate";
+		mainTextArea.setText("Good, lets get going. We have a long journey ahead of us.");
+		
+		Choice1.setText("Begin");
+		Choice2.setText("");
+		Choice3.setText("");
+		Choice4.setText("");
+		Choice5.setText("");
+	}
+	public void QuestPathway1 () {
+		position = "QuestPathway1";
+		mainTextArea.setText("The gate creeps closed behind you squeaking the whole way. As you set out everything is normal, for now.");
+		
+		Choice1.setText("Next");
+		Choice2.setText("");
+		Choice3.setText("");
+		Choice4.setText("");
+		Choice5.setText("");
+	}
+	public void QuestPathway2 () {
+		position = "QuestPathway2";
+		mainTextArea.setText("The trail ahead is uncertain, anything is posible, keep your guard up.");
+		
+		Choice1.setText("start down the trail.");
+		Choice2.setText("Speak with commander.");
+		Choice3.setText("");
+		Choice4.setText("Enter village.");
+		Choice5.setText("");
+	}
+	public void NoMainGate(){
+		position = "NoMainGate";
+		mainTextArea.setText("Well hurry up we havent got time to waste.");
+		
+		Choice1.setText("Continue");
+		Choice2.setText("");
+		Choice3.setText("");
+		Choice4.setText("");
+		Choice5.setText("");
+	}
+	public void OldDecayedBridge() {
+		position = "OldDecayedBridge";
+		mainTextArea.setText("About 15 minutes into your journey you approach an old bridge decayed over many hundreds of years. It is the only obvious way to cross this chasm.");
+		
+		Choice1.setText("Investigate.");
+		Choice2.setText("");
+		Choice3.setText("");
+		Choice4.setText("");
+		Choice5.setText("");
+	}
+	public void OldDecayedBridgeInvestigate() {
+		position = "OldDecayedBridgeInvestigate";
+		mainTextArea.setText("As you investigate, you notice a large crack going across.This does not look safe at all! I wonder if i can repair it?");
+		Choice1.setText("Attempt to cross the bridge knowing it may give way.");
+		Choice2.setText("Search for another way across.");
+		Choice3.setText("Have your squad repair the bridge with wood from a near by wooded area.");
+		Choice4.setText("");
+		Choice5.setText("");
+	}
+	public void SearchforAnotherWay() {
+		position ="SearchforAnotherWay";
+		mainTextArea.setText("You decide the bridge is not safe and set out along the chasm's edge t find another way around.");
+		Choice1.setText("Continue");
+		Choice2.setText("");
+		Choice3.setText("");
+		Choice4.setText("");
+		Choice5.setText("");
+	}
+	public void SearchforAnotherWay2() {
+	position = 	"SearchforAnotherWay2";
+		mainTextArea.setText("About half a mile away from the old bridge you see something up ahead, a structure maybe? Meanwhile you can hear strange noises coming from deep within the chasm.");
+		Choice1.setText("Approach the structure with weapons drawn.");
+		Choice2.setText("");
+		Choice3.setText("");
+		Choice4.setText("");
+		Choice5.setText("");
+	}
+	public void StrangeStructure() {
+		position = "StrangeStructure";
+		Enemy = "Night Wolf";
+		enemyHP = 26;
+		enemyNumber = 2;
+		Victory = "Lose";
+		mainTextArea.setText("As you aproach, a " + Enemy + "runs out and Charges toward you!");
+		Choice1.setText("Attack");
+		Choice2.setText("Return to the bridge");
+		Choice3.setText("");
+		Choice4.setText("");
+		Choice5.setText("");
+		
+	}
+	public void StrangeStructure2() {
+		position = "StrangeStructure2";
+		mainTextArea.setText("Now at the door, you peek in and see nothing, it is pitch black.");
+		Choice1.setText("Walk in.");
+		Choice2.setText("Turn around.");
+		Choice3.setText("");
+		Choice4.setText("");
+		Choice5.setText("");
+	}
+	public void InsideStrangeStructure() {
+		position = "InsideStrangeStructure";
+		mainTextArea.setText("Whhaaaaaaaaaaaa......uggghhh.");
+		Choice1.setText("Continue");
+		Choice2.setText("");
+		Choice3.setText("");
+		Choice4.setText("");
+		Choice5.setText("");
+	}
+	public void DarkHole() {
+		position = "DarkHole";
+		mainTextArea.setText("you all fall through a hole deep into the ground, with no light you are stuck in the dark.");
+		Choice1.setText("Feel around hoping to find something helpfull.");
+		Choice2.setText("Yell out in hopes that someone near by might hear.");
+		Choice3.setText("");
+		Choice4.setText("");
+		Choice5.setText("");
+	}
+	public void DarkHole2() {
+		position = "DarkHole2";
+		mainTextArea.setText("As you feel around the darkness you stick your hand into something strange.");
+		Choice1.setText("Wipe off your hand.");
+		Choice2.setText("");
+		Choice3.setText("");
+		Choice4.setText("");
+		Choice5.setText("");
+	}
+	public void DarkHole3() {
+		position = "DarkHole3";
+		mainTextArea.setText("Unsure of the substance on your hand, you quickly wipe it off. Soon after, you find a stuck lever.");
+		Choice1.setText("Gather around and help me pull this lever!");
+		Choice2.setText("");
+		Choice3.setText("");
+		Choice4.setText("");
+		Choice5.setText("");
+	}
+	public void DarkHoleLeverPulled() {
+		position = "DarkHoleLeverPulled";
+		mainTextArea.setText("After forcfully pulling the lever you hear a loud thud followed by a small streamlike sound. after a moment there is a huge spark and torches around the room ignite.");
+		Choice1.setText("");
+		Choice2.setText("");
+		Choice3.setText("");
+		Choice4.setText("");
+		Choice5.setText("");
+	}
+	public void FalltoYourDemise() {
+		position = "FalltoYourDemise";
+		mainTextArea.setText("You send your squad over the bridge one at a time, they all make it. now it is your turn. As you get half way across the bridge gives out and you fall into the chasm.");
+		Choice1.setText("'Game Over' n/Restart?");
+		Choice2.setText("Quit to Main Menu");
+		Choice3.setText("Settings");
+		Choice4.setText("");
+		Choice5.setText("");
+	}
+	
+	public void Dungeon() {
+		position = "Dungeon";
+		mainTextArea.setText("At the Dungeon door you open it and start your decent into the hole. When you reach the bottom you are greeted by another guard.\n<Hey hows it going? Have you seen Haldir, He should have been here with my coffee already?>");
+	
+		Choice1.setText("No, Havent Seen Him.");
+		Choice2.setText("Yes, i passed him in the dining hall.");
+		Choice3.setText("<Lie> Yes, he said to tell you to get it yourself.");
+		Choice4.setText("");
+		Choice5.setText("Main Hall");
+	}
+	public void GuardDungeon() {
+		position = "GuardDungeon";
+		mainTextArea.setText("There are cells enough for 14 prisoners, 2 in each cell but the key to one cell has been lost. It apears that there is a small footlocker under the old rusted up cot.");
+	}
+	public void Cell1() {
+		position = "Cell1";
+		mainTextArea.setText("");
+	}
+	public void Cell2() {
+		position = "Cell2";
+		mainTextArea.setText("");
+	}
+	public void Cell3() {
+		position = "Cell3";
+		mainTextArea.setText("");
+	}
+	public void Cell4() {
+		position = "Cell4";
+		mainTextArea.setText("");
+	}
+	public void Cell5() {
+		position = "Cell5";
+		mainTextArea.setText("");
+	}
+	public void Cell6() {
+		position = "Cell6";
+		mainTextArea.setText("");
+	}
+	public void Cell7() {
+		position = "Cell7";
+		mainTextArea.setText("");
+	}
+	public void AleCellar() {
+		position = "AleCellar";
+		mainTextArea.setText("This is where they keep the ale. There are barrels everywhere.");
+		
+		Choice1.setText("Walk up to barrel.");
+		Choice2.setText("");
+		Choice3.setText("");
+		Choice4.setText("");
+		Choice5.setText("Main Hall");	
+	}
+	public void AleCellarBarrel() {
+		position = "AleCellarBarrel";
+		mainTextArea.setText("This barrel looks odd, all the others are clean. This one hase junk all over it.");
+		
+		Choice1.setText("Clean off all the junk.");
+		Choice2.setText("");
+		Choice3.setText("");
+		Choice4.setText("");
+		Choice5.setText("Main Hall");
+	}
+	public void AleCellarBarrel2() {
+		position = "AleCellarBarrel2";
+		mainTextArea.setText("After cleaning off the barrel you see a small hole at the edge of the barrel lid up against the wall. It appears to be a key hole.");
+	
+		Choice1.setText("Use key to unlock.");
+		Choice2.setText("Go back");
+		Choice3.setText("");
+		Choice4.setText("");
+		Choice5.setText("");
+	}
+	public void AleCellarBarrel3() {
+		position = "AleCellarBarrel3";
+		mainTextArea.setText("Inside the barrel ther is a lever.");
+	
+		Choice1.setText("Pull lever");
+		Choice2.setText("Ale Cellar");
+		Choice3.setText("");
+		Choice4.setText("");
+		Choice5.setText("");
+	}
+	public void AleCellarBarrel4() {
+		position = "AleCellarBarrel4";
+		mainTextArea.setText("After pulling the lever, the wall to the right slides open just enough to reveal a secret room.");
+	
+		Choice1.setText("Use key to unlock.");
+		Choice2.setText("Go back");
+		Choice3.setText("");
+		Choice4.setText("");
+		Choice5.setText("");
+	}
+	public void SecretRoom() {
+		position = "SecretRoom";
+		mainTextArea.setText("Whhhaa, i was never told about this.");
+			
+		Choice1.setText("");
+		Choice2.setText("");
+		Choice3.setText("");
+		Choice4.setText("");
+		Choice5.setText("Next");
+	}
+	public void SecretRoom1() {
+		position = "SecretRoom1";
+		mainTextArea.setText("There is a torch near by, perhaps you might see what is in here if it were lit.");
+			
+		Choice1.setText("Light torch");
+		Choice2.setText("");
+		Choice3.setText("");
+		Choice4.setText("Ale cellar");
+		Choice5.setText("Next");
+	}
+
+	public void ArmorySwordCage() {
+		position = "ArmorySwordCage";
+		mainTextArea.setText("Locked");
+		Choice1.setText("");
+		Choice2.setText("");
+		Choice3.setText("");
+		Choice4.setText("");
+		Choice5.setText("Armory");
+	}
+	public void ArmoryApparelCage() {
+		position = "ArmoryApparelCage";
+		mainTextArea.setText("Locked");
+		Choice1.setText("");
+		Choice2.setText("");
+		Choice3.setText("");
+		Choice4.setText("");
+		Choice5.setText("Armory");
+	}
+	public void ArmoryCrossbowCage() {
+		position = "ArmoryCrossbowCage";
+		mainTextArea.setText("Locked");
+		Choice1.setText("");
+		Choice2.setText("");
+		Choice3.setText("");
+		Choice4.setText("");
+		Choice5.setText("Armory");
+	}
+
+	public class ChoiceHandler implements ActionListener{
+
+		public void actionPerformed(ActionEvent e) {
+			
+			String yourChoice = e.getActionCommand();
+			
+			switch(position) {
+			case "GuardQuarters1":
+				switch(yourChoice) {
+				case"Choice5":GuardQuarters2();break;
+			}
+				break;
+			case "GuardQuarters2":
+				switch(yourChoice) {
+			case "Choice5":GuardQuarters3();break;
+			}
+				break;
+			case "GuardQuarters3":
+				switch(yourChoice) {
+				case "Choice5":GuardQuarters4();break;
+			}
+				break;
+			case "GuardQuarters4":
+				switch(yourChoice) {
+				case "Choice5":GuardQuarters5();break;
+			}
+				break;
+			case "GuardQuarters5": 
+				switch(yourChoice) {
+				case "Choice1":GuardQuarters6();break;
+			}
+				break;
+			case "GuardQuarters6":
+				switch(yourChoice) {
+				case "Choice5":InitLeaveGuardQuarters();break;
+			}
+				break;
+			case "GuardQuarters7":
+				switch(yourChoice) {
+				case "Choice1": MainHall();break;
+			}
+				break;
+			case "initLeaveGuardQuarters":
+				switch(yourChoice) {
+				case "Choice1":MainHall();break;
+			}
+				break;
+			case "MainHall":
+				switch(yourChoice) {
+				case "Choice1":Armory();break;
+				case "Choice2":DiningHall();break;
+				case "Choice3":Dungeon();break;
+				case "Choice4":GuardQuarters7();break;
+				case "Choice5":AleCellar();break;
+			}
+				break;
+			case "AleCellar":
+				switch(yourChoice) {
+				case "Choice1":AleCellarBarrel();break;
+				case "Choice5":MainHall();break;
+			}
+				break;
+			case "AleCellarBarrel":
+				switch(yourChoice) {
+				case "Choice1":AleCellarBarrel2();break;
+				case "Choice5":MainHall();break;
+			}
+				break;
+			case "AleCellarBarrel2":
+				switch(yourChoice) {
+				case "Choice1":;break;
+				case "Choice2":AleCellarBarrel();break;
+			}
+				break;
+			case "Armory":
+				switch(yourChoice) {
+				case "Choice1":ArmorySwordCage();break;
+				case "Choice2":ArmoryApparelCage();break;
+				case "Choice3":ArmoryCrossbowCage();break;
+				case "Choice5":MainHall();break;		
+			}
+				break;
+			case "ArmorySwordCage":
+				switch(yourChoice) {
+				case "Choice5":Armory();break;
+				}
+				break;
+			case "ArmoryApparelCage":
+				switch(yourChoice) {
+				case "Choice5":Armory();break;
+				}
+				break;
+			case "ArmoryCrossbowCage":
+				switch(yourChoice) {
+				case "Choice5":Armory();break;
+				}
+				
+				break;
+			case "Dungeon":
+				switch(yourChoice) {
+				case "Choice1": GuardDungeon();break;
+				case "Choice5":MainHall();break;
+				
+			}
+				break;
+			case "DiningHall":
+				switch(yourChoice) {
+				case "Choice1":KingsHall();break;
+				case "Choice2":Kitchen();break;
+				case "Choice3":MainHall();break;
+				case "Choice4":GreatHall();break;
+				case "Choice5": takeApple();break;
+	
+			}
+				break;
+			case "takeApple":
+				switch(yourChoice) {
+				case "Choice1": DiningHall();break;
+				}
+				break;
+			case "GreatHall":
+				switch(yourChoice) {
+				case "Choice1":KingsThrone();break;
+				case "Choice2":MainEntrance();break;
+				case "Choice5":DiningHall();break;
+			}
+				break;
+			case "KingsHall":
+				switch(yourChoice) {
+				case "Choice1":DiningHall();break;
+			}
+				break;
+			case "Kitchen":
+				switch(yourChoice) {
+				case "Choice1":DiningHall();break;
+			
+			}
+				break;
+			case "KingsThrone":
+				switch(yourChoice) {
+				case "Choice1":KingsThronePassage();break;
+				case "Choice2":GreatHall();break;
+				}
+				break;
+			case "KingsThronePassage":
+			switch(yourChoice) {
+			case "Choice1":
+				if (Victory.equals("lose")) {
+					KingsThronePassage1();break;
+				}
+				else if(Victory.equals("win")) {
+				KingsThronePassage2();break;
+				}
+			
+			}
+			break;
+			case "KingsThronePassage1":
+				switch(yourChoice) {
+				case "Choice1":GreatHall();break;
+				case "Choice2":battleMethod();break;
+			}
+				break;
+			case "KingsThronePassage2":
+					switch(yourChoice) {
+					case "Choice1":KingsRoom();break;
+					case "Choice2":KingsThrone();break;
+					}
+					break;
+			case "battleMethod":
+				switch(yourChoice) {
+				case "Choice1":
+					if (enemyNumber == 2) {
+					OldDecayedBridge();break;
+					}
+					else {
+						KingsThrone();break;
+					}
+				case "Choice2": playerAttack();break;
+			}
+				break;
+			case "playerAttack":
+				switch(yourChoice) {
+				case "Choice1": 
+					if(enemyHP<1) {
+						win();
+					}
+					else if(enemyHP>0) {
+						enemyAttack();
+					}
+					
+				}
+				break;
+			case "enemyAttack":
+				switch(yourChoice) {
+				case "Choice1":
+					if(playerHP<1) {
+						lose();
+					}
+					else if(playerHP>0) {
+					battleMethod();
+				}
+			}	break; 
+				case "win":
+					switch(yourChoice){
+					case "Choice1":
+						if (enemyNumber == 2) {
+							StrangeStructure2();break;
+							
+						}
+						else {
+							KingsThronePassage2();break;
+						}
+					case "Choice2":KingsThrone();break;
+					}
+					break;
+				case "MainEntrance":
+					switch(yourChoice) {
+					case "Choice1": CastleGarden();break;
+					case "Choice2":GreatHall();break;
+					}
+					break;
+				case "CastleGarden":
+					switch(yourChoice) {
+					case "Choice1":Village();break;
+					}
+					break;
+				case "Village":
+					switch(yourChoice) {
+					case "Choice1":MainGate();break;
+					case "Choice3":Markets();break;
+					}
+					break;
+				case "MainGate":
+					switch(yourChoice) {
+					case "Choice1":MainGate2();break;
+					case "Choice5":Village();break;
+					}
+					break;
+				case "MainGate2":
+					switch(yourChoice) {
+					case "Choice1":YesMainGate();break;
+					case "Choice2":NoMainGate();break;
+					}
+					break;
+				case "YesMainGate":
+					switch(yourChoice) {
+					case "Choice1":QuestPathway1();break;
+					}
+					break;
+				case "NoMainGate":
+				switch(yourChoice) {
+				case "Choice1":Village();break;
+				}
+				break;
+				case "QuestPathway1":
+					switch(yourChoice) {
+					case "Choice1":QuestPathway2();break;
+					}
+					break;
+				case "QuestPathway2":
+					switch(yourChoice) {
+					case "Choice1":OldDecayedBridge();break;
+					}
+					break;
+				case "OldDecayedBridge":
+					switch(yourChoice) {
+					case "Choice1":OldDecayedBridgeInvestigate();break;
+					}
+					break;
+				case "OldDecayedBridgeInvestigate":
+					switch(yourChoice) {
+					case "Choice1":FalltoYourDemise();break;
+					case "Choice2":SearchforAnotherWay();break;
+					}
+					break;
+				case "SearchforAnotherWay":
+					switch(yourChoice) {
+					case "Choice1":SearchforAnotherWay2();break;
+					}
+					break;
+				case "SearchforAnotherWay2":
+					switch(yourChoice) {
+					case "Choice1":StrangeStructure();break;
+					}
+					break;
+				case "StrangeStructure":
+					switch(yourChoice) {
+					case "Choice1":battleMethod();break;
+					}
+					break;
+				case "StrangeStructure2":
+					switch(yourChoice) {
+					case "Choice1":InsideStrangeStructure();break;
+					}
+					break;
+				case "InsideStrangeStructure":
+					switch(yourChoice) {
+					case "Choice1":DarkHole();break;
+					}
+				case "DarkHole":
+					switch(yourChoice) {
+					case "Choice1":DarkHole2();break;
+					}
+					break;
+				case "DarkHole2":
+					switch(yourChoice) {
+					case "Choice1":DarkHole3();break;
+					}
+					break;
+				case "DarkHole3":
+					switch(yourChoice) {
+					case "Choice1":DarkHoleLeverPulled();break;
+					}
+					break;
+				case "FalltoYourDemise":
+					switch(yourChoice) {
+					case "Choice1":playerSetup();break;
+					}
+		}	
+	}	
+}
+	public void battleMethod() {
+		position = "battleMethod";
+		mainTextArea.setText("The " + Enemy +"'s" + " HP is: "+ enemyHP);
+		
+		Choice1.setText("Flee");
+		Choice2.setText("Attack");
+		Choice3.setText("");
+		Choice4.setText("");
+		Choice5.setText("");
+	}
+	public void playerAttack() {
+		position = "playerAttack";
+	int playerDamage = 0;
+	
+	if(weapon.equals("Long Sword")) {
+		playerDamage = new java.util.Random().nextInt(6);
+	}
+	else if(weapon.equals("Fork")) {
+		playerDamage = new java.util.Random().nextInt(2);
+	}
+	mainTextArea.setText("You attacked the " + Enemy + " and dealt " + playerDamage + " damage!");
+	
+	enemyHP = enemyHP - playerDamage;
+	
+	Choice1.setText(">");
+	Choice2.setText("");
+	Choice3.setText("");
+	Choice4.setText("");
+	Choice5.setText("");
+	}
+	
+	public void enemyAttack() {
+		position = "enemyAttack";
+		
+		int enemyDamage = 0;
+		enemyDamage = new java.util.Random().nextInt(3);
+		
+		mainTextArea.setText("The " + Enemy + " atacked you, you lost " + enemyDamage + " HP.");
+		
+		playerHP = playerHP - enemyDamage;
+		hpLabelNumber.setText("" + playerHP);
+		
+		Choice1.setText(">");
+		Choice2.setText("");
+		Choice3.setText("");
+		Choice4.setText("");
+		Choice5.setText("");
+	}
+	public void win() {
+		position = "win";
+		Victory = "win";
+		if(enemyNumber == 2 && Victory == "win") {
+			int goldCoins = new java.util.Random().nextInt(5);
+			mainTextArea.setText("You have defeated the " + Enemy + ". The " + Enemy + " dropped " + goldCoins + " gold coins");
+			goldCoinsNumber = goldCoinsNumber + goldCoins;
+			goldCoinsLabelName.setText("" + goldCoinsNumber);
+			Choice1.setText("Continue");
+			Choice2.setText("");
+			Choice3.setText("");
+			Choice4.setText("");
+			Choice5.setText("");
+		}
+		
+		else {
+			
+		int goldCoins = new java.util.Random().nextInt(3);
+		mainTextArea.setText("You have defeated the " + Enemy + ". The " + Enemy + " dropped " + goldCoins + " gold coins");
+		goldCoinsNumber = goldCoinsNumber + goldCoins;
+		goldCoinsLabelName.setText("" + goldCoinsNumber);
+		Choice1.setText("Continue through passage.");
+		Choice2.setText("King's Throne");
+		Choice3.setText("");
+		Choice4.setText("");
+		Choice5.setText("");
+	}
+		}
+	public void lose() {
+		position = "lose";
+		mainTextArea.setText("You are dead.\n\n<Game Over");
+		
+		Choice1.setText("Restart");
+		Choice2.setText("");
+		Choice3.setText("");
+		Choice4.setText("");
+		Choice5.setText("");
+	}
+	
+	public void itemUsed(int slotNumber) {
+		playerHP = playerHP + playerItem[slotNumber].healingValue;
+		hpLabelNumber.setText("" + playerHP);
+		
+		playerItem[slotNumber] = empty;
+		invb1.setText(playerItem[0].name);
+		invb2.setText(playerItem[1].name);
+		invb3.setText(playerItem[2].name);
+		invb4.setText(playerItem[3].name);
+		invb5.setText(playerItem[4].name);
+		invb6.setText(playerItem[5].name);	
+	}
+
+	public class TitleScreenHandler implements ActionListener{
+
+		public void actionPerformed(ActionEvent e) {
+			if(e.getSource()==Continue) {
+				gamePlayScreen();
+			}		
+		}
+	}
+			public class InventoryHandler implements ActionListener{
+					
+					public void actionPerformed(ActionEvent e) {
+						
+						String yourChoice = e.getActionCommand();
+						switch(yourChoice) {
+						case "Inventorybtn":
+							if (inventoryStatus.equals("close")){
+								Choice1.setVisible(false);
+								Choice2.setVisible(false);
+								Choice3.setVisible(false);
+								Choice4.setVisible(false);
+								Choice5.setVisible(false);
+							InventoryPanel.setVisible(true);
+							invb1.setText(playerItem[0].name);
+							invb2.setText(playerItem[1].name);
+							invb3.setText(playerItem[2].name);
+							invb4.setText(playerItem[3].name);
+							invb5.setText(playerItem[4].name);
+							invb6.setText(playerItem[5].name);
+							inventoryStatus = "open";
+	}
+							else if (inventoryStatus.equals("open")){
+								Choice1.setVisible(true);
+								Choice2.setVisible(true);
+								Choice3.setVisible(true);
+								Choice4.setVisible(true);
+								Choice5.setVisible(true);
+							InventoryPanel.setVisible(false);
+							inventoryStatus = "close";
+	}		
+							break;
+						case "invb1":
+							itemUsed(0);
+							break;
+						case "invb2":
+							itemUsed(1);
+							break;
+						case "invb3":
+							itemUsed(2);
+							break;
+						case "invb4":
+							itemUsed(3);
+							break;
+						case "invb5":
+							itemUsed(4);
+							break;
+						case "invb6":
+							itemUsed(5);
+							break;
+			}
+		}			
+	}	
+			public class weaponsHandler implements ActionListener{
+
+			
+				public void actionPerformed(ActionEvent e) {
+					
+					String yourChoice = e.getActionCommand();
+					switch (yourChoice) {
+					case "WeaponsMenuOpen":
+						if (weaponsMenuStatus.equals ("close")) {
+							weaponsMenuStatus = "open";
+							weaponsPanel.setVisible(true);
+							
+						}
+						else if (weaponsMenuStatus.equals("open")) {
+							weaponsMenuStatus = "close";
+							weaponsPanel.setVisible(false);
+						}
+					}
+					
+				}
+				
+			}
+				public class SuperItem {
+					String name;
+					int healingValue;
+					int maxDmg;
+					int KeyValue;
+					int ProtectionValue;		
+	}
+				
+			public class ItemEmpty extends SuperItem {
+				ItemEmpty(){
+				name = "";
+		}	
+	}
+				public class Weapon_LongSword extends SuperItem{
+					
+					Weapon_LongSword(){
+					name = "Long Sword";
+					maxDmg = 4;
+		}
+	}
+				public class Weapon_Fork extends SuperItem{
+					Weapon_Fork(){
+						name = "Fork";
+						maxDmg = 1;
+						
+		}
+	}
+				public class Food_Mutton extends SuperItem{
+					Food_Mutton(){
+						name = "Mutton";
+						healingValue = 7;
+		}
+	}
+				public class Food_Apple extends SuperItem{
+					Food_Apple(){
+						name = "Apple";
+						healingValue = 4;
+					}
+				}
+			
+				public class Key_CastleKey extends SuperItem{
+					
+					Key_CastleKey(){
+						name = "Castle Key";
+						KeyValue = 1;
+		}
+	}
+				public class Key_CastleArmoryKey extends SuperItem{
+					Key_CastleArmoryKey(){
+						name = "Armory Key";
+						KeyValue = 2;
+		}
+	}
+				public class Aparrel_GuardBoots extends SuperItem{
+					Aparrel_GuardBoots(){
+						name = "Guard Boots";
+						ProtectionValue = 1;
+		}
+	}
+				
+				public class Aparrel_GuardTrousers extends SuperItem{
+					Aparrel_GuardTrousers(){
+						name = "Guard Trousers";
+						ProtectionValue = 2;
+		}
+	}	
+				public class Aparrel_GuardShirt extends SuperItem{
+					Aparrel_GuardShirt(){
+						name = "Guard Shirt";
+						ProtectionValue = 2;
+		}
+	}
+				
+}
